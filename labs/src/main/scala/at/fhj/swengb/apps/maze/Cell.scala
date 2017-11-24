@@ -15,7 +15,6 @@ object Cell {
 
     Cell(pos, topLeft, region, up = maybeUp, right = maybeRight, down = maybeDown, left = maybeLeft)
   }
-
 }
 
 case class Cell(pos: Pos
