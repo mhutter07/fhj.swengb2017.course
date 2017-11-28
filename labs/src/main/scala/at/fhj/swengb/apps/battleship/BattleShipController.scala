@@ -36,11 +36,20 @@ case object Horizontal extends Direction
 case object Vertical extends Direction
 
 object BattleShip {
-
   def apply(name: String, p: BattlePos, d: Direction): BattleShip = {
     d match {
       case Horizontal => BattleShip(name, (p.x until (p.x + 5)).map(x => BattlePos(x, p.y)).toSet)
       case Vertical => BattleShip(name, (p.y until (p.y + 5)).map(y => BattlePos(p.x, y)).toSet)
+    }
+  }
+
+}
+
+object Cruiser {
+  def apply(name: String, p: BattlePos, d: Direction): Cruiser = {
+    d match {
+      case Horizontal => Cruiser(name, (p.x until (p.x + 4)).map(x => BattlePos(x, p.y)).toSet)
+      case Vertical => Cruiser(name, (p.y until (p.y + 4)).map(y => BattlePos(p.x, y)).toSet)
     }
   }
 
@@ -53,6 +62,23 @@ case class BattleShip(name: String, positions: Set[BattlePos]) extends Vessel {
 
   // require proofs that positions is of size 5
   require(positions.size == 5, s"For mighty battleship '$name' required 5 positions, but got ${positions.size}.")
+  val allXPosAreTheSame : Boolean = positions.map(_.x).size == 1
+  val allYPosAreTheSame : Boolean= positions.map(_.y).size == 1
+  val allCellsAreConnected : Boolean = true
+  val samePos : Boolean = allYPosAreTheSame || allXPosAreTheSame
+  require (samePos, "At least one cell has other coordinates than the other")
+  require (allCellsAreConnected, "At least one cell is not connected to the others")
+}
+
+case class Cruiser(name: String, positions: Set[BattlePos]) extends Vessel {
+  require(name.nonEmpty, "Name has to be set.")
+  require(positions.size == 4, s"For mighty battleship '$name' required 4 positions, but got ${positions.size}.")
+  val allXPosAreTheSame : Boolean = positions.map(_.x).size == 1
+  val allYPosAreTheSame : Boolean= positions.map(_.y).size == 1
+  val allCellsAreConnected : Boolean = true
+  val samePos : Boolean = allYPosAreTheSame || allXPosAreTheSame
+  require (samePos, "At least one cell has other coordinates than the other")
+  require (allCellsAreConnected, "At least one cell is not connected to the others")
 }
 
 
@@ -71,6 +97,7 @@ object Fleet {
   // TODO what is the smallest battlefield all vessels could be placed on?
   def apply(battleField: BattleField): Fleet = {
     Fleet(Set[Vessel](BattleShip("Archduke John", BattlePos(0, 0), Vertical)))
+    Fleet(Set[Vessel](Cruiser("Kaiser Wilhelm", BattlePos(3, 3), Vertical)))
   }
 
 }
