@@ -39,13 +39,13 @@ object Fleet {
     val destroyers: Set[Vessel] = Set(
       new Destroyer("Graz", BattlePos(5, 5), Horizontal),
       new Destroyer("Wien", BattlePos(0, 6), Horizontal),
-      new Destroyer("Linz", BattlePos(0, 7), Horizontal),
+      new Destroyer("Linz", BattlePos(0, 7), Horizontal)
     )
     val submarines: Set[Vessel] = Set(
       new Submarine("A", BattlePos(6, 6), Horizontal),
       new Submarine("A", BattlePos(1, 6), Horizontal),
       new Submarine("A", BattlePos(3, 2), Horizontal),
-      new Submarine("A", BattlePos(4, 4), Horizontal),
+      new Submarine("A", BattlePos(4, 4), Horizontal)
     )
 
     val fleet: Set[Vessel] = battleships ++ cruisers ++ destroyers ++ submarines
